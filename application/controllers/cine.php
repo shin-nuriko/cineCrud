@@ -3,6 +3,12 @@ class Cine extends CI_Controller {
 
 	private $limit = 4; //cine per page
 
+	private $upload_config = array('upload_path' => './images/', 
+						        'allowed_types' => 'gif|jpg|jpeg|png', 
+						        'max_size'      => 100, 
+						        'max_width'     => 1024, 
+						        'max_height'    => 768);
+
     function __construct()
     {
         // Call the Model constructor
@@ -45,14 +51,13 @@ class Cine extends CI_Controller {
         $this->load->view('cineList', $data);
     }
 
-    function addCine(){
+    function getUploadConfig(){
 
-		$config['upload_path']   = './images/'; 
-        $config['allowed_types'] = 'gif|jpg|jpeg|png'; 
-        $config['max_size']      = 100; 
-        $config['max_width']     = 1024; 
-        $config['max_height']    = 768;  
-        $this->load->library('upload', $config);
+    }
+
+    function addCine()
+    {
+        $this->load->library('upload', $this->upload_config );
 
 		if ( $this->upload->do_upload('poster')) {
 			$upload_data = $this->upload->data();
@@ -65,20 +70,65 @@ class Cine extends CI_Controller {
           
         } 
 
-		
-		// set user message
-		//$message = '<div class="success">Add new cine successful!</div>';
-
-
         $this->index(0);
     }
 
     function delete($id)
 	{
-		// delete person
+		// delete cine
 		$this->cineModel->delete($id);
 		
-		// redirect to person list page
+		// redirect to cine list page
+		redirect('cine/index/','refresh');
+	}
+
+	function update($id)
+	{
+
+		// prefill form values
+		$cine = $this->cineModel->get_by_id($id)->row();
+		$this->form_data->id = $cine->id;
+		$this->form_data->title = $cine->title;
+		$this->form_data->poster = $cine->poster;
+		$this->form_data->description = $cine->description;
+		
+		// set common properties
+		$data['message'] = '';
+		$data['link_back'] = anchor('cine/index/','Back to list of cines',array('class'=>'back'));
+	
+		// load view
+		$this->load->view('cineEdit', $data);
+	}
+
+	function updateCine()
+	{
+        $this->load->library('upload', $this->upload_config );
+
+		$id = $this->input->post('id');
+		if ( $this->upload->do_upload('poster')) {
+			$upload_data = $this->upload->data();
+			$cine = array('title' => $this->input->post('title'),
+						'poster' => $upload_data['file_name'],
+						'description' => $this->input->post('description') );
+        } else {
+			$cine = array('title' => $this->input->post('title'),
+						'description' => $this->input->post('description') );
+			$data['message'] = '<div class="success">update cine success</div>';
+        } 
+        $this->cineModel->update($id,$cine);
+
+		$data['link_back'] = anchor('cine/index/','Back to list of cines',array('class'=>'back'));
+				
+		// prefill form values
+		$cine = $this->cineModel->get_by_id($id)->row();
+		$this->form_data->id = $cine->id;
+		$this->form_data->title = $cine->title;
+		$this->form_data->poster = $cine->poster;
+		$this->form_data->description = $cine->description;
+
+		// load view
+		//$this->load->view('cineEdit', $data);
+		// redirect to cine list page
 		redirect('cine/index/','refresh');
 	}
 
