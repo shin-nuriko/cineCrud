@@ -38,7 +38,9 @@
 |
 */
 
-$route['default_controller'] = "cine";
+$route['default_controller'] = "display";
+$route['manage'] = "cine/index";
+$route['cine/(:any)'] = "cine/$1";
 $route['404_override'] = '';
 
 

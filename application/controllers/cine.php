@@ -13,13 +13,12 @@ class Cine extends CI_Controller {
     {
         // Call the Model constructor
         parent::__construct();
- 
-         
-        // load library
-        $this->load->library(array('table','form_validation'));
-         
+        
         // load helper
         $this->load->helper('url');
+
+        // load library
+-       $this->load->library(array('form_validation'));
          
         // load model
         $this->load->model('cineModel','',TRUE);
