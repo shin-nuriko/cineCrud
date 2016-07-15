@@ -7,23 +7,20 @@
 		<link rel="stylesheet" href="<?php echo base_url(); ?>css/cinemanage.css">		
 	</head>
 	<body>
-		<?php echo $message; ?>
 		<div id="top">
 			<div class="add_show">
 				<div class="title">Add new show</div>
 				<form id="addShow" action="<?php echo site_url('cine/addCine'); ?>" method="post" enctype="multipart/form-data">
 					<table>
 						<tr><td>Title</td><td><input id="ntitle" name="title"></td></tr>
-						<tr><td>Line 1</td><td><input id="nline0" name="line0"></td></tr>
-						<tr><td>Line 2</td><td><input id="nline1" name="line1"></td></tr>
-						<tr><td>Line 3</td><td><input id="nline2" name="line2"></td></tr>
-						<tr><td>Line 4</td><td><input id="nline3" name="line3"></td></tr>
 						<tr><td>Poster</td><td><input id="poster" type="file" name="poster"></td></tr>
+						<tr><td>Description</td><td><textarea id="description" name="description"></textarea></td></tr>
 					</table>
 					<div><input type="submit" value="Add New" /></div>
 				</form>
 			</div>
 		</div>
+		<div class="paging"><?php echo $pagination; ?></div>
 		<div id="bottom">
 			<div class="shows_list">
 			<?php foreach ($cine_data as $cine) { ?>
@@ -49,7 +46,7 @@
 			<?php } ?>
 			</div>
 		</div>
-		<div class="paging"><?php echo $pagination; ?></div>
+
 	</body>
 </html>
 

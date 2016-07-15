@@ -15,7 +15,7 @@ class CineModel extends CI_Model {
     }
     // get cine with paging
     function get_paged_list($limit = 4, $offset = 0){
-        $this->db->order_by('id','asc');
+        $this->db->order_by('id','desc');
         return $this->db->get($this->tbl_cine, $limit, $offset);
     }
     // get cine by id
