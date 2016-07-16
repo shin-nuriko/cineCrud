@@ -1,7 +1,31 @@
 const MAX_ITEMS_DISPLAY = 4;
 const RELOAD_INTERVAL = 10000;
 const BASE_IMAGE_URL = 'http://localhost/Sites/_ci/cineCrud//images/';
+const SOURCE_FOR_UPDATES = 'http://localhost/Sites/_ci/cineCrud/index.php/display/getDisplayJson' 
 
+
+var checkForUpdate = function() {
+	var orig_list = $("#origlist").text();
+		original = JSON.parse(orig_list);
+ 		$.get(SOURCE_FOR_UPDATES, function(data, status){
+ 			newlist = data;
+            origlist = JSON.parse(orig_list);
+
+            for (i = 0; i < MAX_ITEMS_DISPLAY; i++) {
+	            if ( newlist[i].id != original[i].id || 
+	            	 newlist[i].title != original[i].title ||
+	            	 newlist[i].poster != original[i].poster || 
+	            	 newlist[i].description != original[i].description )
+	            {
+	            	//update local copies
+					$("#hiddenlist").text(JSON.stringify(newlist));
+					$("#origlist").text(JSON.stringify(newlist));
+					break;
+	            }
+        	}
+        }
+    )
+}
 var rotateList = function() {
 	var newlist = {};
 	var next = max = 0;
@@ -41,7 +65,7 @@ var reloadCineList = function() {
 		$("#right ul").append(poster).fadeIn();
    	}
    	$("#left").fadeTo(1000, 1);
-   	$("#right ul").fadeTo(1000, 1);
+   	$("#right ul").fadeTo(1000, 0.8);
 
    	updateTicker();
    	rotateList();
@@ -60,4 +84,5 @@ var updateTicker = function() {
 rotateList();
 reloadCineList();
 setInterval('reloadCineList()', RELOAD_INTERVAL);
+setInterval('checkForUpdate()', RELOAD_INTERVAL);
 

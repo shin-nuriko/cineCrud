@@ -25,6 +25,7 @@
 			</div>
 		</div>
 		<div id="hiddenlist" style="display:none"><?php echo $json; ?></div>
+		<div id="origlist" style="display:none"><?php echo $json; ?></div>
 	</body>
 </html>
 <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>

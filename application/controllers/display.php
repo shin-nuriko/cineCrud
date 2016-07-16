@@ -25,5 +25,11 @@ class Display extends CI_Controller {
     	$this->load->view('displayList', $data);
     }
 
+    function getDisplayJson()
+    {
+    	header('Content-type: application/json');
+		echo json_encode($this->cineModel->get_paged_list($this->limit)->result());
+    }
+
 }
 ?>
