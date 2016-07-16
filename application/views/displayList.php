@@ -14,7 +14,7 @@
 			<div id="right">
 				<ul>
 					<?php for($i = 1; $i < count($cine_data); $i++) { ?>
-					<li><img class="poster" src="<?php echo base_url(); ?>/images/<?php echo $cine_data[$i]->poster; ?>"></li>
+					<li><img id="cine<?php echo $i; ?>" class="poster" src="<?php echo base_url(); ?>/images/<?php echo $cine_data[$i]->poster; ?>"></li>
 					<?php } ?>
 				</ul>
 			</div>
@@ -24,7 +24,8 @@
 				<div><?php echo $cine_data[0]->title; ?> -- <?php echo $cine_data[0]->description; ?></div>
 			</div>
 		</div>
-		<div id="hiddenlist" style="display:none"></div>
+		<div id="hiddenlist" style="display:none"><?php echo $json; ?></div>
 	</body>
 </html>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
 <script src="<?php echo base_url(); ?>/js/cineview.js"></script>
