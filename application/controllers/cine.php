@@ -24,7 +24,8 @@ class Cine extends CI_Controller {
         $this->load->model('cineModel','',TRUE);
     }
 
-	function index($offset = 0){
+	function index($offset = 0)
+	{
         // offset
         $uri_segment = 3;
         $offset = $this->uri->segment($uri_segment);
@@ -48,10 +49,6 @@ class Cine extends CI_Controller {
         }
 
         $this->load->view('cineList', $data);
-    }
-
-    function getUploadConfig(){
-
     }
 
     function addCine()
@@ -83,7 +80,6 @@ class Cine extends CI_Controller {
 
 	function update($id)
 	{
-
 		// prefill form values
 		$cine = $this->cineModel->get_by_id($id)->row();
 		$this->form_data->id = $cine->id;
@@ -125,9 +121,6 @@ class Cine extends CI_Controller {
 		$this->form_data->poster = $cine->poster;
 		$this->form_data->description = $cine->description;
 
-		// load view
-		//$this->load->view('cineEdit', $data);
-		// redirect to cine list page
 		redirect('cine/index/','refresh');
 	}
 
@@ -153,6 +146,4 @@ class Cine extends CI_Controller {
 	}
 
 }
-
-
 ?>

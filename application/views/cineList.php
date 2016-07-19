@@ -1,5 +1,11 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html>
+<?php
+if (!isset($this->session->userdata['logged_in'])) {
+
+header("location: http://localhost/Sites/_ci/cineCrud/index.php/manage_login/user_login_process");
+}
+?>
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 		<title>Manage Now Showing</title>
