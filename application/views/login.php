@@ -2,7 +2,7 @@
 <?php
 if (isset($this->session->userdata['logged_in'])) {
 
-header("location: http://localhost/login/index.php/manage_login/user_login_process");
+header("location: http://localhost/Sites/_ci/cineCrud/index.php/manage_login/user_login_process");
 }
 ?>
 <head>
@@ -43,7 +43,6 @@ echo "</div>";
 <label>Password :</label>
 <input type="password" name="password" id="password" placeholder="**********"/><br/><br />
 <input type="submit" value=" Login " name="submit"/><br />
-<a href="<?php echo base_url() ?>index.php/manage_login/user_registration_show">To SignUp Click Here</a>
 <?php echo form_close(); ?>
 </div>
 </div>

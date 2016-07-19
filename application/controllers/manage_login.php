@@ -13,8 +13,8 @@ Class Manage_Login extends CI_Controller {
 		// Load form validation library
 		$this->load->library('form_validation');
 
-		// Load database
-		$this->load->model('loginModel');
+		// load model
+        $this->load->model('loginModel','',TRUE);
 	}
 
 	// Show login page
@@ -35,31 +35,31 @@ Class Manage_Login extends CI_Controller {
 			if(isset($this->session->userdata['logged_in'])){
 				redirect('cine/index/','refresh');
 			}else{
-				$this->load->view('manage_login/index/');
+				$this->load->view('login');
 			}
 		} else {
 			$data = array(
 			'username' => $this->input->post('username'),
 			'password' => $this->input->post('password')
 			);
-			$result = $this->loginModel->login($data);
+			$result = $this->loginModel->check_login($data);
 			if ($result == TRUE) {
 				$username = $this->input->post('username');
-				//$result = $this->loginModel->read_user_information($username);
-				//if ($result != false) {
+				$result = $this->loginModel->read_user_information($username);
+				if ($result != false) {
 					$session_data = array(
 									'username' => $result[0]->user_name,
-									//'email' => $result[0]->user_email,
+									'email' => $result[0]->user_email,
 									);
 					// Add user data in session
 					$this->session->set_userdata('logged_in', $session_data);
 					redirect('cine/index/','refresh');
-				//}
+				}
 			} else {
 				$data = array(
 					'error_message' => 'Invalid Username or Password'
 				);
-				$this->load->view('manage_login/index/', $data);
+				$this->load->view('login', $data);
 			}
 		}
 	}

@@ -1,6 +1,6 @@
 <?php
 
-Class LoginModel extends CI_Model {
+class LoginModel extends CI_Model {
 
     function __construct()
     {
@@ -9,9 +9,9 @@ Class LoginModel extends CI_Model {
     }
 
 	// Read data using username and password
-	public function login($data) 
+	public function check_login($data) 
 	{
-		/*$condition = "user_name =" . "'" . $data['username'] . "' AND " . "user_password =" . "'" . $data['password'] . "'";
+		$condition = "user_name =" . "'" . $data['username'] . "' AND " . "user_password =" . "'" . $data['password'] . "'";
 		$this->db->select('*');
 		$this->db->from('user_login');
 		$this->db->where($condition);
@@ -22,7 +22,7 @@ Class LoginModel extends CI_Model {
 			return true;
 		} else {
 			return false;
-		}*/
+		}
 		return true;
 	}
 
