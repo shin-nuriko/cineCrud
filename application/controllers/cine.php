@@ -40,6 +40,15 @@ class Cine extends CI_Controller {
         $config['total_rows'] = $this->cineModel->count_all();
         $config['per_page'] = $this->limit;
         $config['uri_segment'] = $uri_segment;
+        $config['full_tag_open'] = '<ul class="pagination">';
+        $config['full_tag_close'] = '</ul>';
+        $config['num_tag_open'] = '<li>';
+        $config['num_tag_close'] = '</li>';
+        $config['cur_tag_open']  = '<li class="active"><a href="#">'; 
+        $config['cur_tag_close'] = $config['num_tag_close'] . '</a>';
+        $config['next_tag_open'] = $config['prev_tag_open'] = $config['num_tag_open']; 
+        $config['next_tag_close']= $config['prev_tag_close']= $config['num_tag_close'];
+
         $this->pagination->initialize($config);
         $data['pagination'] = $this->pagination->create_links();
         
