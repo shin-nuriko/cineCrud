@@ -47,8 +47,9 @@ class Cine extends CI_Controller {
 
             $data['cine_data'][] = $cine;
         }
-
+        $this->load->view('header', $data);
         $this->load->view('cineList', $data);
+        $this->load->view('footer', $data);
     }
 
     function addCine()

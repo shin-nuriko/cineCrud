@@ -1,31 +1,36 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html>
-<?php
-if (!isset($this->session->userdata['logged_in'])) {
-
-header("location: http://localhost/Sites/_ci/cineCrud/index.php/manage_login/user_login_process");
-}
-?>
-	<head>
-		<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-		<title>Manage Now Showing</title>
-		<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-		<link rel="stylesheet" href="<?php echo base_url(); ?>css/cinemanage.css">		
-	</head>
-	<body>
-		<div id="top">
-			<div class="add_show">
-				<div class="title">Add new show</div>
-				<form id="addShow" action="<?php echo site_url('cine/addCine'); ?>" method="post" enctype="multipart/form-data">
-					<table>
-						<tr><td>Title</td><td><input id="ntitle" name="title"></td></tr>
-						<tr><td>Poster</td><td><input id="poster" type="file" name="poster"></td></tr>
-						<tr><td>Description</td><td><textarea id="description" name="description"></textarea></td></tr>
-					</table>
-					<div><input type="submit" value="Add New" /></div>
-				</form>
-			</div>
+<div class="top row">
+	<div class="col-sm-offset-1 col-sm-10">
+		<div class="title">Add new show</div>
+		<form id="addShow" action="<?php echo site_url('cine/addCine'); ?>" method="post" enctype="multipart/form-data" class="form-horizontal" role="form">
+		<div class="form-group">
+		    <label class="control-label col-sm-2" for="title">Title:</label>
+		    <div class="col-sm-10">
+		      <input class="form-control" id="ntitle" name="title">
+		    </div>
 		</div>
+		<div class="form-group">
+		    <label class="control-label col-sm-2" for="poster">Poster:</label>
+		    <div class="col-sm-10">
+		      <input class="form-control" type="file" id="poster" name="poster">
+		    </div>
+		</div>
+		<div class="form-group">
+		    <label class="control-label col-sm-2" for="description">Description:</label>
+		    <div class="col-sm-10">
+		      <textarea class="form-control" id="description" name="description"></textarea>
+		    </div>
+		</div>
+		<div class="form-group"> 
+		    <div class="col-sm-offset-10 col-sm-2">
+		      <button type="submit" class="btn btn-default">Submit</button>
+		    </div>
+		</div>
+
+		</form>
+	</div>
+</div>
+
+
 		<div class="paging"><?php echo $pagination; ?></div>
 		<div id="bottom">
 			<div class="shows_list">
@@ -53,5 +58,4 @@ header("location: http://localhost/Sites/_ci/cineCrud/index.php/manage_login/use
 			</div>
 		</div>
 
-	</body>
-</html>
+	
