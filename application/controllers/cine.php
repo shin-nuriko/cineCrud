@@ -102,7 +102,9 @@ class Cine extends CI_Controller {
 		$data['link_back'] = anchor('cine/index/','Back to list of cines',array('class'=>'back'));
 	
 		// load view
+        $this->load->view('header', $data);
 		$this->load->view('cineEdit', $data);
+        $this->load->view('footer', $data);
 	}
 
 	function updateCine()

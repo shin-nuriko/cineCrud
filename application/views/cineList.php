@@ -36,12 +36,10 @@
 
 <?php foreach ($cine_data as $cine) { ?>
 <div class="panel row">
-	<div class="col-sm-offset-1 col-sm-2">
-		<div class="poster">
-			<img src="<?php echo base_url(); ?>/images/<?php echo $cine->poster; ?>">
-		</div>
+	<div class="col-sm-offset-1 col-sm-3">
+		<img class="img-responsive" src="<?php echo base_url(); ?>/images/<?php echo $cine->poster; ?>">
 	</div>
-		<div class="col-sm-7">
+		<div class="col-sm-6">
 		<div class="title"><?php echo $cine->title; ?></div>
 		<?php echo $cine->description; ?>
 	</div>
