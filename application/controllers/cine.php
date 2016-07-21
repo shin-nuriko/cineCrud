@@ -5,9 +5,9 @@ class Cine extends CI_Controller {
 
 	private $upload_config = array('upload_path' => './images/', 
 						        'allowed_types' => 'gif|jpg|jpeg|png', 
-						        'max_size'      => 100, 
-						        'max_width'     => 1024, 
-						        'max_height'    => 768);
+						        'max_size'      => 2000, 
+						        'max_width'     => 2048, 
+						        'max_height'    => 1405);
 
     function __construct()
     {
@@ -40,6 +40,15 @@ class Cine extends CI_Controller {
         $config['total_rows'] = $this->cineModel->count_all();
         $config['per_page'] = $this->limit;
         $config['uri_segment'] = $uri_segment;
+        $config['full_tag_open'] = '<ul class="pagination">';
+        $config['full_tag_close'] = '</ul>';
+        $config['num_tag_open'] = '<li>';
+        $config['num_tag_close'] = '</li>';
+        $config['cur_tag_open']  = '<li class="active"><a href="#">'; 
+        $config['cur_tag_close'] = $config['num_tag_close'] . '</a>';
+        $config['next_tag_open'] = $config['prev_tag_open'] = $config['num_tag_open']; 
+        $config['next_tag_close']= $config['prev_tag_close']= $config['num_tag_close'];
+
         $this->pagination->initialize($config);
         $data['pagination'] = $this->pagination->create_links();
         
@@ -47,8 +56,9 @@ class Cine extends CI_Controller {
 
             $data['cine_data'][] = $cine;
         }
-
+        $this->load->view('header', $data);
         $this->load->view('cineList', $data);
+        $this->load->view('footer', $data);
     }
 
     function addCine()
@@ -92,7 +102,9 @@ class Cine extends CI_Controller {
 		$data['link_back'] = anchor('cine/index/','Back to list of cines',array('class'=>'back'));
 	
 		// load view
+        $this->load->view('header', $data);
 		$this->load->view('cineEdit', $data);
+        $this->load->view('footer', $data);
 	}
 
 	function updateCine()
