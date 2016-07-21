@@ -5,9 +5,9 @@ class Cine extends CI_Controller {
 
 	private $upload_config = array('upload_path' => './images/', 
 						        'allowed_types' => 'gif|jpg|jpeg|png', 
-						        'max_size'      => 100, 
-						        'max_width'     => 1024, 
-						        'max_height'    => 768);
+						        'max_size'      => 2000, 
+						        'max_width'     => 2048, 
+						        'max_height'    => 1405);
 
     function __construct()
     {

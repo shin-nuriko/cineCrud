@@ -49,23 +49,23 @@ var reloadCineList = function() {
   	var hidden_list = $("#hiddenlist").text();
   	list = JSON.parse(hidden_list);
 
-	var poster = '<img id="cine0" src="' + BASE_IMAGE_URL + list[0].poster + '">';
+	var poster = '<img class="img-responsive" id="cine0" src="' + BASE_IMAGE_URL + list[0].poster + '">';
 
   	$("#left img").remove();
-	$("#right ul li").remove();
+	$("#right div").remove();
 	$("#left").fadeTo(1, 0.0);
-	$("#right ul").fadeTo(1, 0.0);
+	$("#right div").fadeTo(1, 0.0);
 	$("#left").html(poster).fadeIn();
 
    	for (i = 1; i < MAX_ITEMS_DISPLAY; i++) {
    		image_slot = 'cine' + i;
    		image_src  = BASE_IMAGE_URL + list[i].poster;
    		poster = image_slot + " = '" + image_src + "'";
-   		poster = '<li><img id="' + image_slot + '" src="' + image_src + '"></li>';
-		$("#right ul").append(poster).fadeIn();
+   		poster = '<div class="row poster"><img class="img-responsive" id="' + image_slot + '" src="' + image_src + '"></div>';
+		$("#right").append(poster).fadeIn();
    	}
    	$("#left").fadeTo(1000, 1);
-   	$("#right ul").fadeTo(1000, 0.8);
+   	$("#right").fadeTo(1000, 0.8);
 
    	updateTicker();
    	rotateList();
@@ -74,11 +74,14 @@ var reloadCineList = function() {
 
 var updateTicker = function() {
 	var tickerText = '';
+	var ticker = '';
 	var hidden_list = $("#hiddenlist").text();
   	list = JSON.parse(hidden_list);
 
-  	tickerText = list[0].title + ' -- ' + list[0].description;
-	$(".ticker").text(tickerText);
+  	$(".ticker div").remove();
+  	tickerText = '<b>' + list[0].title + '</b> -- ' + list[0].description + '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';
+  	ticker = '<div>' + tickerText + tickerText + tickerText + tickerText + tickerText + '</div>';
+	$(".ticker").append(ticker);
 }
 
 rotateList();
