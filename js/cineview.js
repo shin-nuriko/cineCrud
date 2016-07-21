@@ -1,4 +1,4 @@
-const MAX_ITEMS_DISPLAY = 4;
+const MAX_ITEMS_DISPLAY = 6;
 const RELOAD_INTERVAL = 10000;
 const BASE_IMAGE_URL = 'http://localhost/Sites/_ci/cineCrud//images/';
 const SOURCE_FOR_UPDATES = 'http://localhost/Sites/_ci/cineCrud/index.php/display/getDisplayJson' 

@@ -1,6 +1,6 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 class Display extends CI_Controller {
-		private $limit = 4; //number of cine to display
+		private $limit = 6; //number of cine to display
 
     function __construct()
     {
