@@ -4,14 +4,22 @@ const BASE_IMAGE_URL = 'http://localhost/Sites/_ci/cineCrud//images/';
 const SOURCE_FOR_UPDATES = 'http://localhost/Sites/_ci/cineCrud/index.php/display/getDisplayJson' 
 
 
+var getCountData = function() {
+	var ctr = 0;
+	var orig_list = $("#origlist").text();
+  	list = JSON.parse(orig_list);
+  	ctr = (list.length < MAX_ITEMS_DISPLAY) ? list.length : MAX_ITEMS_DISPLAY;
+  	return (ctr);
+}
+
 var checkForUpdate = function() {
 	var orig_list = $("#origlist").text();
-		original = JSON.parse(orig_list);
- 		$.get(SOURCE_FOR_UPDATES, function(data, status){
+	original = JSON.parse(orig_list);
+ 	$.get(SOURCE_FOR_UPDATES, function(data, status){
  			newlist = data;
             origlist = JSON.parse(orig_list);
 
-            for (i = 0; i < MAX_ITEMS_DISPLAY; i++) {
+            for (i = 0; i < getCountData(); i++) {
 	            if ( newlist[i].id != original[i].id || 
 	            	 newlist[i].title != original[i].title ||
 	            	 newlist[i].poster != original[i].poster || 
@@ -29,19 +37,20 @@ var checkForUpdate = function() {
 var rotateList = function() {
 	var newlist = {};
 	var next = max = 0;
+	var max_count = getCountData();
 
   	var hidden_list = $("#hiddenlist").text();
-  	list = JSON.parse(hidden_list);
+  	cinelist = JSON.parse(hidden_list);
 
-	for (i = 0; i < MAX_ITEMS_DISPLAY; i++) {
+	for (i = 0; i < max_count; i++) {
 		if ( 0 == i ){
-			list[MAX_ITEMS_DISPLAY] = list[0];
+			cinelist[max_count] = list[0];
 		} 
-		list[i] = list[i + 1];	
+		cinelist[i] = cinelist[i + 1];	
 	}
 
 	//save list
-	hidden_list = JSON.stringify(list);
+	hidden_list = JSON.stringify(cinelist);
 	$("#hiddenlist").text(hidden_list);
 }
 
@@ -57,7 +66,7 @@ var reloadCineList = function() {
 	$("#right div").fadeTo(1, 0.0);
 	$("#left").html(poster).fadeIn();
 
-   	for (i = 1; i < MAX_ITEMS_DISPLAY; i++) {
+   	for (i = 1; i < getCountData(); i++) {
    		image_slot = 'cine' + i;
    		image_src  = BASE_IMAGE_URL + list[i].poster;
    		poster = image_slot + " = '" + image_src + "'";
