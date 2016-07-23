@@ -1,7 +1,16 @@
+<?php if ($form_error > 0) { ?>
+<div class = "row">
+	<h4><div class="col-sm-offset-1 col-sm-10 label label-danger">
+		<?php echo validation_errors();	echo $message; ?>
+	</div></h4>
+</div>
+<?php } ?>
+
 <div class="row">
 	<div class="col-sm-offset-1 col-sm-10">
 		<h3><span class="label label-primary col-sm-12">Add To The List</span></h3>
-		</br></br><form id="addShow" action="<?php echo site_url('cine/addCine'); ?>" method="post" enctype="multipart/form-data" class="form-horizontal" role="form">
+		</br></br>
+		<form id="addShow" action="<?php echo site_url('cine/addCine'); ?>" method="post" enctype="multipart/form-data" class="form-horizontal" role="form">
 		<div class="form-group">
 		    <label class="control-label col-sm-2" for="title">Title:</label>
 		    <div class="col-sm-9">

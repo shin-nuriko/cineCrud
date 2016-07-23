@@ -24,7 +24,7 @@ class Cine extends CI_Controller {
         $this->load->model('cineModel','',TRUE);
     }
 
-	function index($offset = 0)
+	function index($offset = 0, $error_flag = 0)
 	{
         // offset
         $uri_segment = 3;
@@ -56,6 +56,12 @@ class Cine extends CI_Controller {
 
             $data['cine_data'][] = $cine;
         }
+        $data['form_error'] = $error_flag;
+        $data['message'] = '';
+        if ($error_flag == 2) { //bad file format
+        	$data['message'] = 'Poster should be of type gif, jpg, jpeg or png with filesize not exceeding 2MB. Maximum width is 2048 and maximum height is 1405 pixels. ';
+        }
+
         $this->load->view('header', $data);
         $this->load->view('cineList', $data);
         $this->load->view('footer', $data);
@@ -63,20 +69,28 @@ class Cine extends CI_Controller {
 
     function addCine()
     {
-        $this->load->library('upload', $this->upload_config );
+    	$form_error = 1;
+    	$this->form_validation->set_rules('title', 'Title', 'trim|required');
+    	$this->form_validation->set_rules('description', 'Description', 'trim|required');
 
-		if ( $this->upload->do_upload('poster')) {
-			$upload_data = $this->upload->data();
+    	if ($this->form_validation->run() == TRUE) {
+    		$form_error = 0;
+	        $this->load->library('upload', $this->upload_config );
 
-			// save data
-			$cine = array('title' => $this->input->post('title'),
-						'poster' => $upload_data['file_name'],
-						'description' => $this->input->post('description') );
-			$id = $this->cineModel->save($cine);
-          
-        } 
+			if ( $this->upload->do_upload('poster')) {
+				$upload_data = $this->upload->data();
 
-        $this->index(0);
+				// save data
+				$cine = array('title' => $this->input->post('title'),
+							'poster' => $upload_data['file_name'],
+							'description' => $this->input->post('description') );
+				$id = $this->cineModel->save($cine);
+	          
+	        } else {
+	        	$form_error = 2;//bad file format
+	        }
+    	}
+        $this->index(0, $form_error);
     }
 
     function delete($id)
