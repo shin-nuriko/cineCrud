@@ -13,40 +13,48 @@ header("location: http://localhost/Sites/_ci/cineCrud/index.php/manage_login/use
 	<script type="text/javascript" src="<?php echo base_url("assets/js/bootstrap.js"); ?>"></script>
 <body>
 <div id="main"  class="container" align="center">
-<?php
-if (isset($logout_message)) {
-	echo "<div class='message'>";
-	echo $logout_message;
-	echo "</div>";
-}
-?>
-<?php
-if (isset($message_display)) {
-	echo "<div class='message'>";
-	echo $message_display;
-	echo "</div>";
-}
-?>
-	<div id="login">
-	<h2>Login</h2>
-	<hr/>
-	<?php 
-	$form_attributes = array('role' => "form");
-	echo form_open('manage_login/user_login_process',$form_attributes); ?>
-	<?php
-	echo "<div class='error_msg'>";
-	if (isset($error_message)) {
-		echo $error_message;
-	}
-	echo validation_errors();
-	echo "</div>";
-	?>
-	<label>UserName :</label>
-	<input type="text" name="username" id="name" placeholder="username"/><br /><br />
-	<label>Password :</label>
-	<input type="password" name="password" id="password" placeholder="**********"/><br/><br />
-	<input type="submit" value=" Login " name="submit" class="btn btn-default"/><br />
-	<?php echo form_close(); ?>
+	<?php if (isset($message_display)) { ?>
+	<div class = "row">
+		<div class="col-md-12 col-sm-12 label label-pill label-success">
+			<?php echo $message_display;?> 
+		</div>
+	</div>
+	<?php } 
+	if (isset($error_message)) { ?>
+	<div class = "row">
+		<div class="col-md-12 col-sm-12 label label-pill label-danger">
+			<?php echo $error_message;?> 
+		</div>
+	</div>
+	<?php } ?>
+	<div id="login" class="row">
+		<h2>Login</h2>
+		<div class = "row">
+			<div class="col-md-12 col-sm-12" style="color:red">
+				<?php echo validation_errors();	?>
+			</div>
+		</div>
+		<?php 
+		$form_attributes = array('role' => 'form', 'class' => 'form-horizontal');
+		echo form_open('manage_login/user_login_process',$form_attributes); ?>
+		<div class="form-group">
+		    <label class="control-label col-sm-offset-3 col-sm-2 col-md-2" for="username">UserName :</label>
+		    <div class="col-sm-4 col-md-4">
+		      <input type="text" class="form-control" name="username" placeholder="username">
+		    </div>
+		</div>
+		<div class="form-group">
+		    <label class="control-label col-sm-offset-3 col-sm-2 col-md-2" for="password">Password :</label>
+		    <div class="col-sm-4 col-md-4">
+		      <input type="password" class="form-control" name="password" placeholder="******">
+		    </div>
+		</div>
+		<div class="form-group"> 
+		    <div class="col-sm-offset-7 col-sm-2">
+		      <button type="submit" class="btn btn-default" value=" Login ">Submit</button>
+		    </div>
+		</div>
+		<?php echo form_close(); ?>
 	</div>
 </div>
 </body>
