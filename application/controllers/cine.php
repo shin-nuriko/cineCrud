@@ -7,7 +7,7 @@ class Cine extends CI_Controller {
 						        'allowed_types' => 'gif|jpg|jpeg|png', 
 						        'max_size'      => 2000, 
 						        'max_width'     => 2048, 
-						        'max_height'    => 1405);
+						        'max_height'    => 2048);
 
     function __construct()
     {
@@ -59,7 +59,7 @@ class Cine extends CI_Controller {
         $data['form_error'] = $error_flag;
         $data['message'] = '';
         if ($error_flag == 2) { //bad file format
-        	$data['message'] = 'Poster should be of type gif, jpg, jpeg or png with filesize not exceeding 2MB. Maximum width is 2048 and maximum height is 1405 pixels. ';
+        	$data['message'] = 'Poster should be of type gif, jpg, jpeg or png with filesize not exceeding 2MB. Maximum width or height is 2048 pixels. ';
         }
 
         $this->load->view('header', $data);

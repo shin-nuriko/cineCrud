@@ -21,7 +21,7 @@
 		    <label class="control-label col-sm-2" for="poster">Poster:</label>
 		    <div class="col-sm-9">
 		      <input class="form-control" type="file" id="poster" name="poster">
-		      Poster is of type gif, jpg, jpeg or png with filesize not exceeding 2MB. Maximum width is 2048 and maximum height is 1405 pixels
+		      Poster is of type gif, jpg, jpeg or png with filesize not exceeding 2MB. Maximum width or height is 2048 pixels.
 		    </div>
 		</div>
 		<div class="form-group">
