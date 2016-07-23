@@ -21,12 +21,14 @@
 		    <label class="control-label col-sm-2" for="poster">Poster:</label>
 		    <div class="col-sm-9">
 		      <input class="form-control" type="file" id="poster" name="poster">
+		      Poster is of type gif, jpg, jpeg or png with filesize not exceeding 2MB. Maximum width is 2048 and maximum height is 1405 pixels
 		    </div>
 		</div>
 		<div class="form-group">
 		    <label class="control-label col-sm-2" for="description">Description:</label>
 		    <div class="col-sm-9">
-		      <textarea class="form-control" id="description" name="description"></textarea>
+		      <textarea class="form-control" id="description" name="description" size="50"></textarea>
+		      (max 120 chars)
 		    </div>
 		</div>
 		<div class="form-group"> 

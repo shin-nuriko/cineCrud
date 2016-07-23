@@ -71,7 +71,7 @@ class Cine extends CI_Controller {
     {
     	$form_error = 1;
     	$this->form_validation->set_rules('title', 'Title', 'trim|required');
-    	$this->form_validation->set_rules('description', 'Description', 'trim|required');
+    	$this->form_validation->set_rules('description', 'Description', 'trim|required|max_length[120]');
 
     	if ($this->form_validation->run() == TRUE) {
     		$form_error = 0;

@@ -7,8 +7,8 @@ const SOURCE_FOR_UPDATES = 'http://localhost/Sites/_ci/cineCrud/index.php/displa
 var getCountData = function() {
 	var ctr = 0;
 	var orig_list = $("#origlist").text();
-  	list = JSON.parse(orig_list);
-  	ctr = (list.length < MAX_ITEMS_DISPLAY) ? list.length : MAX_ITEMS_DISPLAY;
+  	ctrlist = JSON.parse(orig_list);
+  	ctr = (ctrlist.length < MAX_ITEMS_DISPLAY) ? ctrlist.length : MAX_ITEMS_DISPLAY;
   	return (ctr);
 }
 
@@ -93,8 +93,7 @@ var updateTicker = function() {
 	$(".ticker").append(ticker);
 }
 
-rotateList();
-reloadCineList();
+//rotateList();
+//reloadCineList();
 setInterval('reloadCineList()', RELOAD_INTERVAL);
 setInterval('checkForUpdate()', RELOAD_INTERVAL);
-
