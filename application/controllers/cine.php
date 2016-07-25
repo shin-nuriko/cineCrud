@@ -70,8 +70,7 @@ class Cine extends CI_Controller {
     function addCine()
     {
     	$form_error = 1;
-    	$this->form_validation->set_rules('title', 'Title', 'trim|required');
-    	$this->form_validation->set_rules('description', 'Description', 'trim|required|max_length[120]');
+    	$this->_set_rules();
 
     	if ($this->form_validation->run() == TRUE) {
     		$form_error = 0;
@@ -102,7 +101,7 @@ class Cine extends CI_Controller {
 		redirect('cine/index/','refresh');
 	}
 
-	function update($id)
+	function update($id, $error_flag = 0)
 	{
 		// prefill form values
 		$cine = $this->cineModel->get_by_id($id)->row();
@@ -114,7 +113,8 @@ class Cine extends CI_Controller {
 		// set common properties
 		$data['message'] = '';
 		$data['link_back'] = anchor('cine/index/','Back to list of cines',array('class'=>'back'));
-	
+		$data['form_error'] = $error_flag;
+
 		// load view
         $this->load->view('header', $data);
 		$this->load->view('cineEdit', $data);
@@ -123,52 +123,47 @@ class Cine extends CI_Controller {
 
 	function updateCine()
 	{
-        $this->load->library('upload', $this->upload_config );
+    	$form_error = 1;
+    	$this->_set_rules();
 
-		$id = $this->input->post('id');
-		if ( $this->upload->do_upload('poster')) {
-			$upload_data = $this->upload->data();
-			$cine = array('title' => $this->input->post('title'),
-						'poster' => $upload_data['file_name'],
-						'description' => $this->input->post('description') );
-        } else {
-			$cine = array('title' => $this->input->post('title'),
-						'description' => $this->input->post('description') );
-			$data['message'] = '<div class="success">update cine success</div>';
-        } 
-        $this->cineModel->update($id,$cine);
+    	if ($this->form_validation->run() == TRUE) {
+    		$form_error = 0;
+		    $this->load->library('upload', $this->upload_config );
 
-		$data['link_back'] = anchor('cine/index/','Back to list of cines',array('class'=>'back'));
-				
-		// prefill form values
-		$cine = $this->cineModel->get_by_id($id)->row();
-		$this->form_data->id = $cine->id;
-		$this->form_data->title = $cine->title;
-		$this->form_data->poster = $cine->poster;
-		$this->form_data->description = $cine->description;
+			$id = $this->input->post('id');
+			if ( $this->upload->do_upload('poster')) {
+				$upload_data = $this->upload->data();
+				$cine = array('title' => $this->input->post('title'),
+							'poster' => $upload_data['file_name'],
+							'description' => $this->input->post('description') );
+		    } else {
+				$cine = array('title' => $this->input->post('title'),
+							'description' => $this->input->post('description') );
+		    } 
+		    $this->cineModel->update($id,$cine);
 
-		redirect('cine/index/','refresh');
+			$data['link_back'] = anchor('cine/index/','Back to list of cines',array('class'=>'back'));
+					
+			// prefill form values
+			$cine = $this->cineModel->get_by_id($id)->row();
+			$this->form_data->id = $cine->id;
+			$this->form_data->title = $cine->title;
+			$this->form_data->poster = $cine->poster;
+			$this->form_data->description = $cine->description;
+
+			redirect('cine/index/','refresh');
+		} else {
+			$this->update($this->input->post('id'), $form_error);
+		}
 	}
 
-    // set empty default form field values
-	function _set_fields()
-	{
-		$this->form_data->id = '';
-		$this->form_data->title = '';
-		$this->form_data->poster = '';
-		$this->form_data->description = '';
-	}
 	
 	// validation rules
 	function _set_rules()
 	{
-		$this->form_validation->set_rules('title', 'Title', 'trim|required');
-		$this->form_validation->set_rules('poster', 'Poster', 'trim|required');
-		$this->form_validation->set_rules('description', 'Description', 'trim|required');
+   		$this->form_validation->set_rules('title', 'Title', 'trim|required');
+    	$this->form_validation->set_rules('description', 'Description', 'trim|required|max_length[120]');
 		
-		$this->form_validation->set_message('required', '* required');
-		$this->form_validation->set_message('isset', '* required');
-		$this->form_validation->set_error_delimiters('<p class="error">', '</p>');
 	}
 
 }

@@ -42,7 +42,7 @@
 </div>
 <hr>
 <div class="row">
-	<div class="col-sm-offset-10 col-sm-2"><?php echo $pagination; ?></div>
+	<div class="col-sm-offset-6 col-sm-2"><?php echo $pagination; ?></div>
 </div>
 
 <?php foreach ($cine_data as $cine) { ?>
