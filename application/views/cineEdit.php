@@ -1,3 +1,11 @@
+<?php if ($form_error > 0) { ?>
+<div class = "row">
+	<h4><div class="col-sm-offset-1 col-sm-10 label label-danger">
+		<?php echo validation_errors();	echo $message; ?>
+	</div></h4>
+</div>
+<?php } ?>
+
 <div class="row">
 	<div class="col-sm-offset-1 col-sm-10">
 		<h3><span class="label label-primary col-sm-12">Update Information</span></h3>
@@ -20,12 +28,14 @@
 		    <label class="control-label col-sm-2" for="poster">Poster:</label>
 		    <div class="col-sm-9">
 		      <input class="form-control" type="file" name="poster" >
+		      Poster is of type gif, jpg, jpeg or png with filesize not exceeding 2MB. Maximum width or height is 2048 pixels.
 		    </div>
 		</div>
 		<div class="form-group">
 		    <label class="control-label col-sm-2" for="description">Description:</label>
 		    <div class="col-sm-9">
 		      <textarea class="form-control" id="description" name="description"><?php echo set_value('description',$this->form_data->description); ?></textarea>
+		      (max 120 chars)
 		    </div>
 		</div>
 		<div class="form-group"> 

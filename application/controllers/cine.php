@@ -7,7 +7,7 @@ class Cine extends CI_Controller {
 						        'allowed_types' => 'gif|jpg|jpeg|png', 
 						        'max_size'      => 2000, 
 						        'max_width'     => 2048, 
-						        'max_height'    => 1405);
+						        'max_height'    => 2048);
 
     function __construct()
     {
@@ -24,7 +24,7 @@ class Cine extends CI_Controller {
         $this->load->model('cineModel','',TRUE);
     }
 
-	function index($offset = 0)
+	function index($offset = 0, $error_flag = 0)
 	{
         // offset
         $uri_segment = 3;
@@ -56,6 +56,12 @@ class Cine extends CI_Controller {
 
             $data['cine_data'][] = $cine;
         }
+        $data['form_error'] = $error_flag;
+        $data['message'] = '';
+        if ($error_flag == 2) { //bad file format
+        	$data['message'] = 'Poster should be of type gif, jpg, jpeg or png with filesize not exceeding 2MB. Maximum width or height is 2048 pixels. ';
+        }
+
         $this->load->view('header', $data);
         $this->load->view('cineList', $data);
         $this->load->view('footer', $data);
@@ -63,20 +69,27 @@ class Cine extends CI_Controller {
 
     function addCine()
     {
-        $this->load->library('upload', $this->upload_config );
+    	$form_error = 1;
+    	$this->_set_rules();
 
-		if ( $this->upload->do_upload('poster')) {
-			$upload_data = $this->upload->data();
+    	if ($this->form_validation->run() == TRUE) {
+    		$form_error = 0;
+	        $this->load->library('upload', $this->upload_config );
 
-			// save data
-			$cine = array('title' => $this->input->post('title'),
-						'poster' => $upload_data['file_name'],
-						'description' => $this->input->post('description') );
-			$id = $this->cineModel->save($cine);
-          
-        } 
+			if ( $this->upload->do_upload('poster')) {
+				$upload_data = $this->upload->data();
 
-        $this->index(0);
+				// save data
+				$cine = array('title' => $this->input->post('title'),
+							'poster' => $upload_data['file_name'],
+							'description' => $this->input->post('description') );
+				$id = $this->cineModel->save($cine);
+	          
+	        } else {
+	        	$form_error = 2;//bad file format
+	        }
+    	}
+        $this->index(0, $form_error);
     }
 
     function delete($id)
@@ -88,7 +101,7 @@ class Cine extends CI_Controller {
 		redirect('cine/index/','refresh');
 	}
 
-	function update($id)
+	function update($id, $error_flag = 0)
 	{
 		// prefill form values
 		$cine = $this->cineModel->get_by_id($id)->row();
@@ -100,7 +113,8 @@ class Cine extends CI_Controller {
 		// set common properties
 		$data['message'] = '';
 		$data['link_back'] = anchor('cine/index/','Back to list of cines',array('class'=>'back'));
-	
+		$data['form_error'] = $error_flag;
+
 		// load view
         $this->load->view('header', $data);
 		$this->load->view('cineEdit', $data);
@@ -109,52 +123,47 @@ class Cine extends CI_Controller {
 
 	function updateCine()
 	{
-        $this->load->library('upload', $this->upload_config );
+    	$form_error = 1;
+    	$this->_set_rules();
 
-		$id = $this->input->post('id');
-		if ( $this->upload->do_upload('poster')) {
-			$upload_data = $this->upload->data();
-			$cine = array('title' => $this->input->post('title'),
-						'poster' => $upload_data['file_name'],
-						'description' => $this->input->post('description') );
-        } else {
-			$cine = array('title' => $this->input->post('title'),
-						'description' => $this->input->post('description') );
-			$data['message'] = '<div class="success">update cine success</div>';
-        } 
-        $this->cineModel->update($id,$cine);
+    	if ($this->form_validation->run() == TRUE) {
+    		$form_error = 0;
+		    $this->load->library('upload', $this->upload_config );
 
-		$data['link_back'] = anchor('cine/index/','Back to list of cines',array('class'=>'back'));
-				
-		// prefill form values
-		$cine = $this->cineModel->get_by_id($id)->row();
-		$this->form_data->id = $cine->id;
-		$this->form_data->title = $cine->title;
-		$this->form_data->poster = $cine->poster;
-		$this->form_data->description = $cine->description;
+			$id = $this->input->post('id');
+			if ( $this->upload->do_upload('poster')) {
+				$upload_data = $this->upload->data();
+				$cine = array('title' => $this->input->post('title'),
+							'poster' => $upload_data['file_name'],
+							'description' => $this->input->post('description') );
+		    } else {
+				$cine = array('title' => $this->input->post('title'),
+							'description' => $this->input->post('description') );
+		    } 
+		    $this->cineModel->update($id,$cine);
 
-		redirect('cine/index/','refresh');
+			$data['link_back'] = anchor('cine/index/','Back to list of cines',array('class'=>'back'));
+					
+			// prefill form values
+			$cine = $this->cineModel->get_by_id($id)->row();
+			$this->form_data->id = $cine->id;
+			$this->form_data->title = $cine->title;
+			$this->form_data->poster = $cine->poster;
+			$this->form_data->description = $cine->description;
+
+			redirect('cine/index/','refresh');
+		} else {
+			$this->update($this->input->post('id'), $form_error);
+		}
 	}
 
-    // set empty default form field values
-	function _set_fields()
-	{
-		$this->form_data->id = '';
-		$this->form_data->title = '';
-		$this->form_data->poster = '';
-		$this->form_data->description = '';
-	}
 	
 	// validation rules
 	function _set_rules()
 	{
-		$this->form_validation->set_rules('title', 'Title', 'trim|required');
-		$this->form_validation->set_rules('poster', 'Poster', 'trim|required');
-		$this->form_validation->set_rules('description', 'Description', 'trim|required');
+   		$this->form_validation->set_rules('title', 'Title', 'trim|required');
+    	$this->form_validation->set_rules('description', 'Description', 'trim|required|max_length[120]');
 		
-		$this->form_validation->set_message('required', '* required');
-		$this->form_validation->set_message('isset', '* required');
-		$this->form_validation->set_error_delimiters('<p class="error">', '</p>');
 	}
 
 }

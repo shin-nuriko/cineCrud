@@ -1,7 +1,16 @@
+<?php if ($form_error > 0) { ?>
+<div class = "row">
+	<h4><div class="col-sm-offset-1 col-sm-10 label label-danger">
+		<?php echo validation_errors();	echo $message; ?>
+	</div></h4>
+</div>
+<?php } ?>
+
 <div class="row">
 	<div class="col-sm-offset-1 col-sm-10">
 		<h3><span class="label label-primary col-sm-12">Add To The List</span></h3>
-		</br></br><form id="addShow" action="<?php echo site_url('cine/addCine'); ?>" method="post" enctype="multipart/form-data" class="form-horizontal" role="form">
+		</br></br>
+		<form id="addShow" action="<?php echo site_url('cine/addCine'); ?>" method="post" enctype="multipart/form-data" class="form-horizontal" role="form">
 		<div class="form-group">
 		    <label class="control-label col-sm-2" for="title">Title:</label>
 		    <div class="col-sm-9">
@@ -12,12 +21,14 @@
 		    <label class="control-label col-sm-2" for="poster">Poster:</label>
 		    <div class="col-sm-9">
 		      <input class="form-control" type="file" id="poster" name="poster">
+		      Poster is of type gif, jpg, jpeg or png with filesize not exceeding 2MB. Maximum width or height is 2048 pixels.
 		    </div>
 		</div>
 		<div class="form-group">
 		    <label class="control-label col-sm-2" for="description">Description:</label>
 		    <div class="col-sm-9">
-		      <textarea class="form-control" id="description" name="description"></textarea>
+		      <textarea class="form-control" id="description" name="description" size="50"></textarea>
+		      (max 120 chars)
 		    </div>
 		</div>
 		<div class="form-group"> 
@@ -31,7 +42,7 @@
 </div>
 <hr>
 <div class="row">
-	<div class="col-sm-offset-10 col-sm-2"><?php echo $pagination; ?></div>
+	<div class="col-sm-offset-6 col-sm-2"><?php echo $pagination; ?></div>
 </div>
 
 <?php foreach ($cine_data as $cine) { ?>
