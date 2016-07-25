@@ -11,12 +11,12 @@ class Display extends CI_Controller {
         $this->load->helper('url');
          
         // load model
-        $this->load->model('cineModel','',TRUE);
+        $this->load->model('cinemodel','',TRUE);
     }
 
     function index()
     {
-        $cines = $this->cineModel->get_paged_list($this->limit)->result();
+        $cines = $this->cinemodel->get_paged_list($this->limit)->result();
     	$data['json'] = json_encode($cines);
 
    		foreach ($cines as $cine){
@@ -28,7 +28,7 @@ class Display extends CI_Controller {
     function getDisplayJson()
     {
     	header('Content-type: application/json');
-		echo json_encode($this->cineModel->get_paged_list($this->limit)->result());
+		echo json_encode($this->cinemodel->get_paged_list($this->limit)->result());
     }
 
 }

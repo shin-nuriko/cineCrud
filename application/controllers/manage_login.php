@@ -14,7 +14,7 @@ Class Manage_Login extends CI_Controller {
 		$this->load->library('form_validation');
 
 		// load model
-        $this->load->model('loginModel','',TRUE);
+        $this->load->model('loginmodel','',TRUE);
 	}
 
 	// Show login page
@@ -42,10 +42,10 @@ Class Manage_Login extends CI_Controller {
 			'username' => $this->input->post('username'),
 			'password' => $this->input->post('password')
 			);
-			$result = $this->loginModel->check_login($data);
+			$result = $this->loginmodel->check_login($data);
 			if ($result == TRUE) {
 				$username = $this->input->post('username');
-				$result = $this->loginModel->read_user_information($username);
+				$result = $this->loginmodel->read_user_information($username);
 				if ($result != false) {
 					$session_data = array(
 									'username' => $result[0]->user_name,

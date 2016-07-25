@@ -21,7 +21,7 @@ class Cine extends CI_Controller {
 -       $this->load->library(array('form_validation'));
          
         // load model
-        $this->load->model('cineModel','',TRUE);
+        $this->load->model('cinemodel','',TRUE);
     }
 
 	function index($offset = 0, $error_flag = 0)
@@ -32,12 +32,12 @@ class Cine extends CI_Controller {
 
         
         // load data
-        $cines = $this->cineModel->get_paged_list($this->limit, $offset)->result();
+        $cines = $this->cinemodel->get_paged_list($this->limit, $offset)->result();
          
         // generate pagination
         $this->load->library('pagination');
         $config['base_url'] = site_url('cine/index/');
-        $config['total_rows'] = $this->cineModel->count_all();
+        $config['total_rows'] = $this->cinemodel->count_all();
         $config['per_page'] = $this->limit;
         $config['uri_segment'] = $uri_segment;
         $config['full_tag_open'] = '<ul class="pagination">';
@@ -83,7 +83,7 @@ class Cine extends CI_Controller {
 				$cine = array('title' => $this->input->post('title'),
 							'poster' => $upload_data['file_name'],
 							'description' => $this->input->post('description') );
-				$id = $this->cineModel->save($cine);
+				$id = $this->cinemodel->save($cine);
 	          
 	        } else {
 	        	$form_error = 2;//bad file format
@@ -95,7 +95,7 @@ class Cine extends CI_Controller {
     function delete($id)
 	{
 		// delete cine
-		$this->cineModel->delete($id);
+		$this->cinemodel->delete($id);
 		
 		// redirect to cine list page
 		redirect('cine/index/','refresh');
@@ -104,7 +104,7 @@ class Cine extends CI_Controller {
 	function update($id, $error_flag = 0)
 	{
 		// prefill form values
-		$cine = $this->cineModel->get_by_id($id)->row();
+		$cine = $this->cinemodel->get_by_id($id)->row();
 		$this->form_data->id = $cine->id;
 		$this->form_data->title = $cine->title;
 		$this->form_data->poster = $cine->poster;
@@ -140,12 +140,12 @@ class Cine extends CI_Controller {
 				$cine = array('title' => $this->input->post('title'),
 							'description' => $this->input->post('description') );
 		    } 
-		    $this->cineModel->update($id,$cine);
+		    $this->cinemodel->update($id,$cine);
 
 			$data['link_back'] = anchor('cine/index/','Back to list of cines',array('class'=>'back'));
 					
 			// prefill form values
-			$cine = $this->cineModel->get_by_id($id)->row();
+			$cine = $this->cinemodel->get_by_id($id)->row();
 			$this->form_data->id = $cine->id;
 			$this->form_data->title = $cine->title;
 			$this->form_data->poster = $cine->poster;

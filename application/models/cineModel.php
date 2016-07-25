@@ -1,6 +1,6 @@
 <?php
 
-class CineModel extends CI_Model {
+class Cinemodel extends CI_Model {
 	private $tbl_cine = 'cine';
 
     function __construct()
