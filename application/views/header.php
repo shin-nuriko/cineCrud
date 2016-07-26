@@ -22,6 +22,7 @@ header("location: http://localhost/Sites/_ci/cineCrud/index.php/manage_login/use
 	      <a class="navbar-brand" href="#">CineCrud</a>
 	    </div>
 	    <ul class="nav navbar-nav navbar-right">
+	      <li><a href="<?php echo site_url(''); ?>" target="xChild">Display List</a></li>
 	      <li class="active"><a href="<?php echo site_url('cine/index'); ?>">Manage List</a></li>
 	      <li><a href="<?php echo site_url('manage_login/logout'); ?>">Logout</a></li>
 	    </ul>
